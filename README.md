@@ -32,7 +32,7 @@ streamlit run streamlit_app.py
 
 <p align="center">
   <a href="https://app-feature-set-validator-csgcrxkvef3tuw2rtjpggc.streamlit.app/">
-     <img src="wiki/demo.png" alt="demp" />
+     <img src="wiki/demo.gif" alt="demp" />
   </a>
 </p>
 
