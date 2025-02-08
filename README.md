@@ -27,11 +27,11 @@ streamlit run streamlit_app.py
 
 ## Demo App
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](wiki/demo.png)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-feature-set-validator-csgcrxkvef3tuw2rtjpggc.streamlit.app/)
 
 
 <p align="center">
-  <a href="/">
+  <a href="https://app-feature-set-validator-csgcrxkvef3tuw2rtjpggc.streamlit.app/">
      <img src="wiki/demo.png" alt="demp" />
   </a>
 </p>
