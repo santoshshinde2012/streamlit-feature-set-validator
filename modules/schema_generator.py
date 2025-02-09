@@ -1,5 +1,4 @@
 import pandas as pd
-import json
 
 def infer_type(value):
     """Infer JSON schema type and constraints from value."""
