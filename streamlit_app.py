@@ -14,8 +14,6 @@ def layout() -> None:
     left_column, right_column = st.columns([35, 65])
     
     with left_column:
-        schema_json = {}
-        schema_text = ""
         df = load_file()
         
         if df is None or df.empty:
@@ -31,7 +29,15 @@ def layout() -> None:
             
             with st.expander("Formatted JSON Schema"):
                 st.json(schema_json)
-    
+            
+            json_schema_data = json.dumps(schema_json, indent=4).encode("utf-8")
+            st.download_button(
+                label="Download JSON Schema",
+                data=json_schema_data,
+                file_name="json_schema.json",
+                mime="application/json",
+            )
+
     with right_column:
         if df is None or df.empty:
             placeholder = st.empty()
