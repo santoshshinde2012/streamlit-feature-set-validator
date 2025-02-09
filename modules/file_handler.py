@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import json
 
 def load_file() -> pd.DataFrame | None:
     """Handle file upload and return a DataFrame."""
@@ -17,22 +16,3 @@ def load_file() -> pd.DataFrame | None:
         except Exception as e:
             st.error(f"Error processing file: {e}")
     return None
-
-def preview_data(df: pd.DataFrame) -> None:
-    """Display uploaded data in table or JSON format."""
-    data = df.to_dict(orient="records")
-    json_data = json.dumps(data, default=str)
-
-    with st.container(border=True):
-        display_table = st.toggle("File Preview: Table = ON, JSON = OFF", value=True)
-        st.subheader("File Preview:")
-        if display_table:
-            st.dataframe(df)
-        else:
-            st.json(json_data)
-            st.download_button(
-                label="Download JSON",
-                data=json_data,
-                file_name="data.json",
-                mime="application/json",
-            )
