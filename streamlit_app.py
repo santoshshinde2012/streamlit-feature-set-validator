@@ -1,4 +1,3 @@
-import streamlit as st
 from modules.layout import layout
 
 def main() -> None:
