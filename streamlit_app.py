@@ -26,14 +26,15 @@ def layout() -> None:
             )
 
             try:
-                schema_json = json.loads(schema_text)
+                updated_schema = json.loads(schema_text)
             except json.JSONDecodeError:
                 st.error("Invalid JSON Schema format. Please correct it.")
+                updated_schema = schema_json  
 
             with st.expander("Formatted JSON Schema"):
-                st.json(schema_json)
+                st.json(updated_schema)
 
-            json_schema_data = json.dumps(schema_json, indent=4).encode("utf-8")
+            json_schema_data = json.dumps(updated_schema, indent=4).encode("utf-8")
             st.download_button(
                 label="Download JSON Schema",
                 data=json_schema_data,
@@ -48,9 +49,10 @@ def layout() -> None:
             placeholder.image(image)
             return
 
-        preview_data(df)
+        edited_df = preview_data(df)  
+
         if st.button("Validate", key="validate_button", use_container_width=True):
-            validate_data(df, schema_json)
+            validate_data(edited_df, updated_schema)
 
 
 def main() -> None:
