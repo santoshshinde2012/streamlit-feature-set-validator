@@ -1,6 +1,5 @@
 import streamlit as st
 import json
-from PIL import Image
 from modules.file_handler import load_file
 from modules.schema_generator import generate_json_schema
 from modules.validation import validate_data
@@ -13,43 +12,35 @@ def layout() -> None:
 
     left_column, right_column = st.columns([35, 65])
 
-    with left_column:
+    with right_column:
         df = load_file()
 
         if df is None or df.empty:
             show_no_records_screen()
-        else:
-            schema_json = generate_json_schema(df)
-            schema_text = st.text_area(
-                "Generated JSON Schema", json.dumps(schema_json, indent=4), height=300
-            )
+        else: 
+            edited_df = preview_data(df)
 
-            try:
-                updated_schema = json.loads(schema_text)
-            except json.JSONDecodeError:
-                st.error("Invalid JSON Schema format. Please correct it.")
-                updated_schema = schema_json  
+            if st.button("Validate", key="validate_button", use_container_width=True):
+                validate_data(edited_df, updated_schema)
 
-            with st.expander("Formatted JSON Schema"):
-                st.json(updated_schema)
+    with left_column:
+        schema_json = generate_json_schema(df)
+        schema_text = st.text_area(
+            "Define JSON Schema", json.dumps(schema_json, indent=4), height=300
+        )
 
-            json_schema_data = json.dumps(updated_schema, indent=4).encode("utf-8")
-            st.download_button(
-                label="Download JSON Schema",
-                data=json_schema_data,
-                file_name="json_schema.json",
-                mime="application/json",
-            )
+        try:
+            updated_schema = json.loads(schema_text)
+        except json.JSONDecodeError:
+            st.error("Invalid JSON Schema format. Please correct it.")
+            updated_schema = schema_json
 
-    with right_column:
-        if df is None or df.empty:
-            placeholder = st.empty()
-            image = Image.open("./assets/no_record.png")
-            placeholder.image(image)
-            return
+        with st.expander("Formatted JSON Schema"):
+            st.json(updated_schema)
 
-        edited_df = preview_data(df)  
-
-        if st.button("Validate", key="validate_button", use_container_width=True):
-            validate_data(edited_df, updated_schema)
-
+        st.download_button(
+            label="Download JSON Schema",
+            data=json.dumps(updated_schema, indent=4).encode("utf-8"),
+            file_name="json_schema.json",
+            mime="application/json",
+        )
